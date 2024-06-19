@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Analogías</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .robot-visor {
+            width: 90%;
+            max-width: 1350px;
+            height: 95vh;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        #game-container {
+            text-align: center;
+            padding: 100px;
+            width: 100%;
+            position: relative;
+        }
+
+        #question {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: black;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        #options {
+            display: none;
+            position: relative;
+            z-index: 1;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .option-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 350px;
+            margin: auto;
+            padding: 10px;
+            justify-items: center;
+        }
+
+        .option {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .option-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 0;
+        }
+
+        .image {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+            object-fit: contain;
+        }
+
+        .option:hover {
+            transform: scale(1.1);
+        }
+
+        #startImage {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="robot-visor">
+        <div id="game-container">
+            <div class="image-container" id="imageContainer1">
+                <img src="imagenes_Hack/Auto.jpg" alt="Auto" class="image" id="image1">
+            </div>
+
+            <div class="image-container" id="imageContainer2">
+                <img src="imagenes_Hack/Carretera.jpg" alt="Carretera" class="image" id="image2">
+            </div>
+
+            <div class="image-container" id="imageContainer3">
+                <img src="imagenes_Hack/Avion.png" alt="Avion" class="image" id="image3">
+            </div>
+
+            <div id="question"></div>
+            <div id="options" class="option-grid">
+                <div class="option" onclick="checkAnswer('verdura')">
+                    <img src="imagenes_Hack/Mar.jpg" alt="Verdura" class="option-image">
+                </div>
+                <div class="option" onclick="checkAnswer('cielo')">
+                    <img src="imagenes_Hack/Cielo.jpg" alt="Cielo" class="option-image">
+                </div>
+                <div class="option" onclick="checkAnswer('mineral')">
+                    <img src="imagenes_Hack/Cueva.jpg" alt="Mineral" class="option-image">
+                </div>
+                <div class="option" onclick="checkAnswer('instrumento')">
+                    <img src="imagenes_Hack/Riel.jpg" alt="Instrumento" class="option-image">
+                </div>
+            </div>
+            
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <audio id="audio1" src="EJERCICIO2.mp3"></audio>
+    <audio id="audio2" src="EJERCICIO2 OPC.mp3"></audio>
+
+    <img id="startImage" src="imagenes_Hack/BotonPlay.png" alt="Start">
+
+    <script>
+        const questions = [
+            {
+                question: "Los autos son a la tierra como los aviones a...",
+                correctAnswer: "cielo",
+                imageIds: ["image1", "image2", "image3"]
+            },
+            {
+                question: "Completa la analogía: Perro es a animal como rosa es a...",
+                correctAnswer: "flor",
+                imageIds: ["image4", "image5", "image6"]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let currentImageIndex = 0;
+
+        function playSequentialAudio() {
+            const audio1 = document.getElementById('audio1');
+            const audio2 = document.getElementById('audio2');
+
+            audio1.play();
+            audio1.addEventListener('ended', () => {
+                setTimeout(() => {
+                    audio2.play();
+                }, 1000); // Espera de 1 segundo antes de reproducir el segundo audio
+            });
+        }
+
+        function displayNextImage() {
+            if (currentImageIndex > 0) {
+                document.getElementById(questions[currentQuestion].imageIds[currentImageIndex - 1]).style.display = 'none';
+            }
+
+            document.getElementById(questions[currentQuestion].imageIds[currentImageIndex]).style.display = 'block';
+            currentImageIndex++;
+
+            if (currentImageIndex === questions[currentQuestion].imageIds.length) {
+                setTimeout(function() {
+                    displayQuestion();
+                }, 3000);
+            } else {
+                setTimeout(function() {
+                    displayNextImage();
+                }, 3000);
+            }
+        }
+
+        function displayQuestion() {
+            currentImageIndex = 0;
+            questions[currentQuestion].imageIds.forEach(imageId => {
+                document.getElementById(imageId).style.display = 'none';
+            });
+
+            document.getElementById('question').textContent = questions[currentQuestion].question;
+            document.getElementById('question').style.display = 'block';
+            document.getElementById('options').style.display = 'grid';
+        }
+
+        function checkAnswer(answer) {
+            if (answer === questions[currentQuestion].correctAnswer) {
+                window.location.href = 'RespuestaCorrecta2.html';
+            } else {
+                window.location.href = 'RespuestaIncorrecta2.html';
+            }
+        }
+
+        function resetGame() {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('options').style.display = 'none';
+        }
+
+        document.getElementById('startImage').addEventListener('click', function() {
+            playSequentialAudio();
+            displayNextImage();
+            this.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

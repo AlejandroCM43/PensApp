@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Analogías</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .robot-visor {
+            width: 90%; /* Ajusta el ancho según tus necesidades */
+            max-width: 1350px; /* Máximo ancho para mantener proporciones */
+            height: 95vh; /* Altura fija para el visor */
+            background-color: white; /* Color de fondo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white; /* Texto en color negro */
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        #game-container {
+            text-align: center;
+            padding: 100px;
+            width: 100%;
+            position: relative; /* Asegura que el contenido esté posicionado relativamente */
+        }
+
+        #question {
+            font-size: 30px; /* Tamaño de fuente aumentado para mejor legibilidad */
+            margin-bottom:  10px;
+            color: black; /* Color de texto negro */
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        #options {
+            display: none; /* Ocultar opciones inicialmente */
+            position: relative; /* Asegura que las opciones estén posicionadas relativas o estáticas */
+            z-index: 1; /* Asegura que las opciones estén detrás de la pregunta */
+            margin-top: 20px; /* Añadir espacio superior */
+            width: 100%; /* Asegurar que ocupe todo el ancho del contenedor */
+        }
+
+        .option-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px; /* Espacio entre las opciones */
+    max-width: 300px; /* Ancho máximo del grid */
+    margin: auto; /* Centrar horizontalmente */
+    padding: 10px; /* Espaciado interno */
+    justify-items: center; /* Centrar horizontalmente las opciones */
+}
+
+.option {
+    width: 100%; /* Ocupar todo el espacio disponible */
+    height: 100%; /* Ocupar todo el espacio disponible */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 5px;
+    overflow: hidden; /* Evitar que las imágenes se desborden */
+    position: relative; /* Asegurar que el contenido no se desborde */
+}
+
+.option-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover; /* Ajustar la imagen para que cubra el espacio del contenedor */
+}
+
+
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 0; /* Asegura que la imagen esté detrás de la pregunta y opciones */
+        }
+
+        .image {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+            object-fit: contain; /* Ajusta el tamaño de la imagen manteniendo la proporción */
+        }
+
+        .option:hover{
+            transform: scale(1.1);
+        }
+        #startImage {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="robot-visor">
+        <div id="game-container">
+            <!-- Imagen de la manzana -->
+            <div class="image-container" id="imageContainer1">
+                <img src="imagenes_Hack\Maestra.jpg" alt="Maestra" class="image" id="image1">
+            </div>
+
+            <!-- Imagen de las frutas -->
+            <div class="image-container" id="imageContainer2">
+                <img src="imagenes_Hack\Escuela.jpg" alt="Escuela" class="image" id="image2">
+            </div>
+
+            <!-- Imagen de la zanahoria -->
+            <div class="image-container" id="imageContainer3">
+                <img src="imagenes_Hack\chef.png" alt="Chef" class="image" id="image3">
+            </div>
+
+            <div id="question"></div>
+            <div id="options" class="option-grid">
+                <div class="option" onclick="checkAnswer('verdura')">
+                    <img src="imagenes_Hack\Cancha.jpg" alt="Verdura" class="option-image">
+                </div>
+                <div class="option" onclick="checkAnswer('cielo')">
+                    <img src="imagenes_Hack\Aeropuerto.jpg" alt="Cielo" class="option-image">
+                </div>
+                <div class="option" onclick="checkAnswer('mineral')">
+                    <img src="imagenes_Hack\Oficina.jpg" alt="Mineral" class="option-image">
+                </div>
+                <div class="option" onclick="checkAnswer('cocina')">
+                    <img src="imagenes_Hack\Cocina1.jpg" alt="Cocina" class="option-image">
+                </div>
+            </div>
+            
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <audio id="audio1" src="EJERCICIO3.mp3"></audio>
+    <audio id="audio2" src="EJERCICIO3 OPC.mp3"></audio>
+
+    <img id="startImage" src="imagenes_Hack/BotonPlay.png" alt="Start">
+
+    <script>
+        const questions = [
+            {
+                question: "La maestra es a la escuela como el chef a...",
+                correctAnswer: "cocina",
+                imageIds: ["image1", "image2", "image3"]
+            },
+            {
+                question: "Completa la analogía: Perro es a animal como rosa es a...",
+                correctAnswer: "flor",
+                imageIds: ["image4", "image5", "image6"]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let currentImageIndex = 0;
+
+        function playSequentialAudio() {
+            const audio1 = document.getElementById('audio1');
+            const audio2 = document.getElementById('audio2');
+
+            audio1.play();
+            audio1.addEventListener('ended', () => {
+                setTimeout(() => {
+                    audio2.play();
+                }, 1200); // Espera de 1 segundo antes de reproducir el segundo audio
+            });
+        }
+
+        function displayNextImage() {
+            if (currentImageIndex > 0) {
+                document.getElementById(questions[currentQuestion].imageIds[currentImageIndex - 1]).style.display = 'none';
+            }
+
+            document.getElementById(questions[currentQuestion].imageIds[currentImageIndex]).style.display = 'block';
+            currentImageIndex++;
+
+            if (currentImageIndex === questions[currentQuestion].imageIds.length) {
+                setTimeout(function() {
+                    displayQuestion();
+                }, 3000);
+            } else {
+                setTimeout(function() {
+                    displayNextImage();
+                }, 3000);
+            }
+        }
+
+        function displayQuestion() {
+            currentImageIndex = 0;
+            questions[currentQuestion].imageIds.forEach(imageId => {
+                document.getElementById(imageId).style.display = 'none';
+            });
+
+            document.getElementById('question').textContent = questions[currentQuestion].question;
+            document.getElementById('question').style.display = 'block';
+            document.getElementById('options').style.display = 'grid';
+        }
+
+        function checkAnswer(answer) {
+            if (answer === questions[currentQuestion].correctAnswer) {
+                window.location.href = 'RespuestaCorrecta3.html';
+            } else {
+                window.location.href = 'RespuestaIncorrecta3.html';
+            }
+        }
+
+        function resetGame() {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('options').style.display = 'none';
+        }
+
+        document.getElementById('startImage').addEventListener('click', function() {
+            playSequentialAudio();
+            displayNextImage();
+            this.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
+

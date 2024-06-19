@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        body {
+            margin: 0;
+            background-color: #F6DE14; /* Color de fondo deseado */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .RobotFace {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .RobotFace video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="RobotFace">
+        <audio id="audio" src="VozPresentacion.mp3"></audio>
+        <a href="LevelSelection.html">
+            <video id="video" playsinline>
+                <source src="Cara.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const audio = document.getElementById('audio');
+            const video = document.getElementById('video');
+
+            const playMedia = async () => {
+                try {
+                    await video.play();
+                    await audio.play();
+                    console.log('Media is playing');
+                } catch (error) {
+                    console.error('Error playing media:', error);
+                }
+            };
+
+            // Iniciar reproducción de media en click del body
+            document.body.addEventListener('click', playMedia, { once: true });
+        });
+    </script>
+</body>
+</html>

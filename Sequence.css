@@ -1,0 +1,118 @@
+* {
+    padding: 0;
+    margin: 0;
+    background-color: #233142;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: Tahoma;
+    font-weight: lighter;
+}
+
+.topbar {
+    margin: 0;
+    padding: 5px; /* Reducido el padding */
+    border: 1px solid black; /* Reducido el grosor del borde */
+    width: 100%;
+    background-color: #455d7a;
+    font-size: 10px; /* Reducido el tamaño de fuente */
+    color: #e3e3e3;
+}
+
+.topbar h1, .topbar h2 {
+    background-color: #455d7a;
+}
+
+.game-container {
+    margin: auto;
+    border: 2px solid black; /* Reducido el grosor del borde */
+    border-radius: 3px;
+    width: 50%;
+    padding: 2px; /* Reducido el padding */
+    background-color: gray;
+}
+
+.game-grid {
+    display: grid;
+    background-color: gray;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px; /* Simplificado gap */
+    width: 100%;
+}
+
+.grid-btn {
+    background-color: #e3e3e3;
+    border: 1px solid black; /* Reducido el grosor del borde */
+    color: black;
+    height: 60px; /* Reducido la altura */
+    width: auto;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 7px; /* Reducido el tamaño de fuente */
+}
+
+.grid-btn:hover {
+    background-color: white;
+}
+
+.grid-btn-anim {
+    border: 1px solid black; /* Reducido el grosor del borde */
+    background-color: #f95959;
+}
+
+.grid-btn-anim:hover {
+    border: 1px solid black; /* Reducido el grosor del borde */
+    background-color: #f95959;
+}
+
+.grid-btn:disabled {
+    background-color: darkgray;
+    cursor: default;
+}
+
+.extra-btn {
+    background-color: #e3e3e3;
+    border: 1px solid black; /* Reducido el grosor del borde */
+    color: black;
+    height: 30px; /* Reducido la altura */
+    width: auto;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 10px; /* Reducido el tamaño de fuente */
+}
+
+.extra-btn:hover {
+    background-color: white;
+}
+
+.btn-click {
+    transform: scale(0.98);
+}
+
+.score-label {
+    color: #e3e3e3;
+}
+
+.bottom-left-button {
+    position: absolute;
+    bottom: -80px; /* Ajustar posición vertical */
+    left: 20px; /* Ajustar posición horizontal */
+    width: 100px; /* Ancho del botón */
+    height: 100px; /* Alto del botón */
+    display: flex; /* Hacer que el botón sea un contenedor flexible */
+    align-items: center; /* Centrar verticalmente el contenido */
+    justify-content: center; /* Centrar horizontalmente el contenido */
+    transition: transform 0.2s, opacity 0.2s ease-in-out; /* Añadir transición */
+    cursor: pointer; /* Cambiar cursor al hacer hover */
+    border: 2px solid transparent; /* Añadir borde transparente inicial */
+}
+
+.bottom-left-button img {
+    width: 100%; /* Ajustar la imagen para que ocupe todo el espacio del botón */
+    height: auto; /* Mantener el aspecto de la imagen */
+    border-radius: 5px; /* Opcional: añadir bordes redondeados */
+}
+
+.bottom-left-button:hover {
+    transform: scale(1.1); /* Escalar al hacer hover */
+    opacity: 0.8; /* Cambiar opacidad al hacer hover */
+}

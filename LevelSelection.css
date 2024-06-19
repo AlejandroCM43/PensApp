@@ -1,0 +1,133 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ajustado a 100vh para ocupar toda la altura visible */
+    margin: 0;
+    background-color: #FCD40E;
+    position: relative; /* Para posicionar el botón de manera relativa al body */
+}
+
+.LevelContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Definir exactamente tres columnas */
+    gap: 10px; /* Espacio entre las cajas */
+    max-width: 650px; /* Ancho máximo del contenedor */
+    margin: 10px auto; /* Centrar el contenedor en la página y ajustar margen superior */
+    margin-left:150px; /* Ajustar margen izquierdo */
+}
+
+
+.LevelBox {
+    position: relative;
+    width: 70%; /* Ajustar al 100% del ancho de la columna */
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+    border: 2px solid #4CAF50;
+    border-radius: 10px;
+    transition: transform 0.2s;
+}
+
+.LevelBox img {
+    width: 100%;
+    height: auto; /* Cambia a auto para que mantenga el aspecto */
+    display: block; /* Asegura que la imagen se muestre como un bloque */
+}
+
+.LevelBox:hover {
+    transform: scale(1.1);
+}
+
+.rating {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    border-radius: 5px;
+    display: none; /* Inicialmente oculto */
+    justify-content: center;
+    align-items: center;
+}
+
+.LevelBox:hover .rating {
+    display: flex; /* Mostrar al hacer hover sobre LevelBox */
+}
+
+.star {
+    color: gold;
+    font-size: 10px;
+    margin-right: 2px;
+}
+
+.play {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi transparente */
+    opacity: 0; /* Inicialmente oculto */
+    transition: opacity 0.2s ease-in-out;
+    pointer-events: none; /* Evitar que capture eventos de ratón */
+}
+
+.LevelBox:hover .play {
+    opacity: 1; /* Mostrar al hacer hover sobre LevelBox */
+    pointer-events: auto; /* Permitir eventos de ratón cuando se muestra */
+}
+
+.play span {
+    color: white;
+    font-size: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para mejorar visibilidad */
+}
+
+.bottom-left-button {
+    position: absolute;
+    bottom: 20px; /* Ajustar posición vertical */
+    left: 20px; /* Ajustar posición horizontal */
+    width: 100px; /* Ancho del botón */
+    height: 100px; /* Alto del botón */
+    display: flex; /* Hacer que el botón sea un contenedor flexible */
+    align-items: center; /* Centrar verticalmente el contenido */
+    justify-content: center; /* Centrar horizontalmente el contenido */
+    transition: transform 0.2s, opacity 0.2s ease-in-out; /* Añadir transición */
+    cursor: pointer; /* Cambiar cursor al hacer hover */
+    border: 2px solid transparent; /* Añadir borde transparente inicial */
+}
+
+.bottom-left-button img {
+    width: 100%; /* Ajustar la imagen para que ocupe todo el espacio del botón */
+    height: auto; /* Mantener el aspecto de la imagen */
+    border-radius: 5px; /* Opcional: añadir bordes redondeados */
+}
+
+.bottom-left-button:hover {
+    transform: scale(1.1); /* Escalar al hacer hover */
+    opacity: 0.8; /* Cambiar opacidad al hacer hover */
+}
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 600px) {
+    .LevelContainer {
+        grid-template-columns: repeat(1, 1fr); /* Cambiar a una columna en pantallas pequeñas */
+    }
+
+    .LevelBox {
+        width: 100%; /* Ajustar al 100% del ancho de la columna */
+    }
+
+    .bottom-left-button {
+        width: 40px; /* Ajustar tamaño del botón en pantallas pequeñas */
+        height: 40px;
+    }
+}

@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ajustar altura total de la ventana */
+    margin: 0;
+    background-color: #F6DE14; /* Color de fondo de la página */
+}
+
+.RobotFace {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Espacio opcional para ajuste vertical */
+    width: 900px; /* Ancho ajustado para el contenedor */
+    height: 400px; /* Alto ajustado para el contenedor */
+    overflow: hidden; /* Oculta cualquier contenido fuera del contenedor */
+}
+
+.RobotFace video {
+    width: 100%;
+    height: 100%;
+    outline: none; /* Elimina el contorno alrededor del video */
+    pointer-events: none; /* Evita que el video capture eventos de ratón */
+}
+
+.RobotFace a {
+    display: block;
+    width: 80%;
+    height: 100%;
+}
